@@ -56,6 +56,120 @@ button {
   height: 100%;
 }
 
+.intro-screen {
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+  place-items: center;
+  padding: calc(28px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.72) 34%, transparent 58%),
+    linear-gradient(180deg, #f8fbff 0%, #eef3fb 100%);
+}
+
+.intro-card {
+  width: min(430px, 100%);
+  padding: 28px 22px 22px;
+  border: 1px solid rgba(217, 222, 236, 0.95);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 22px 52px rgba(31, 42, 68, 0.16);
+  text-align: center;
+}
+
+.intro-logo {
+  display: block;
+  width: 142px;
+  height: 142px;
+  margin: 0 auto 18px;
+  border-radius: 30px;
+  box-shadow: 0 16px 34px rgba(31, 42, 68, 0.12);
+}
+
+.intro-kicker {
+  margin: 0 0 6px;
+  color: var(--tut-blue);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.intro-card h1 {
+  margin: 0;
+  color: var(--tut-text);
+  font-size: 30px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.intro-copy {
+  margin: 12px 0 18px;
+  color: var(--tut-muted);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.65;
+}
+
+.intro-install-box {
+  margin: 0 0 18px;
+  padding: 16px;
+  border: 1px solid #d8e0f5;
+  border-radius: 16px;
+  background: var(--tut-blue-soft);
+  text-align: left;
+}
+
+.intro-install-box h2 {
+  margin: 0 0 8px;
+  color: var(--tut-blue-ink);
+  font-size: 17px;
+  font-weight: 850;
+}
+
+.intro-install-box p {
+  margin: 0 0 10px;
+  color: var(--tut-muted);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.intro-install-box ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--tut-text);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.intro-primary {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  border-radius: 14px;
+  color: #fff;
+  background: var(--tut-blue);
+  font-size: 16px;
+  font-weight: 850;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(53, 75, 151, 0.24);
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.intro-primary:hover {
+  background: var(--tut-blue-deep);
+}
+
+.intro-primary:active {
+  transform: translateY(1px);
+}
+
+.intro-primary:focus-visible {
+  outline: 3px solid rgba(53, 75, 151, 0.3);
+  outline-offset: 3px;
+}
+
 .map-view {
   position: relative;
   width: 100%;
@@ -755,6 +869,34 @@ button {
 }
 
 @media (max-width: 520px) {
+  .intro-screen {
+    align-items: start;
+    padding-top: calc(24px + env(safe-area-inset-top));
+  }
+
+  .intro-card {
+    padding: 24px 18px 18px;
+    border-radius: 22px;
+  }
+
+  .intro-logo {
+    width: 128px;
+    height: 128px;
+    margin-bottom: 16px;
+  }
+
+  .intro-card h1 {
+    font-size: 27px;
+  }
+
+  .intro-copy {
+    font-size: 13px;
+  }
+
+  .intro-install-box {
+    padding: 14px;
+  }
+
   .map-search-panel {
     top: calc(14px + env(safe-area-inset-top));
     left: max(12px, env(safe-area-inset-left));
