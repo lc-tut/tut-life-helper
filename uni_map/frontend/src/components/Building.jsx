@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 import * as THREE from 'three';
 
@@ -24,8 +24,6 @@ export default function Building({ data, selectedFloor, onFloorClick }) {
           <group key={floor.level} position={[0, yPos, 0]} visible={!isHidden}>
             <Floor
               size={[width, floorHeight, depth]}
-              floorData={floor}
-              bldgName={data.name}
               isSelected={isSelected}
               onClick={() => onFloorClick(data, floor)}
             />
@@ -45,7 +43,7 @@ export default function Building({ data, selectedFloor, onFloorClick }) {
   );
 }
 
-function Floor({ size, floorData, bldgName, isSelected, onClick }) {
+function Floor({ size, isSelected, onClick }) {
   const [hovered, setHover] = useState(false);
 
   const matColor = isSelected ? '#d0e8ff' : hovered ? '#e6f7ff' : '#ffffff';

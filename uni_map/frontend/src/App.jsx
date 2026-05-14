@@ -1,8 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, OrthographicCamera, ContactShadows, Environment } from '@react-three/drei';
+import { Bus, CalendarDays, Map as MapIcon, UsersRound, Utensils } from 'lucide-react';
 import * as THREE from 'three';
 import Building from './components/Building';
+
+const tabs = [
+  { id: 'map', label: 'マップ', Icon: MapIcon },
+  { id: 'timetable', label: '時間割', Icon: CalendarDays },
+  { id: 'cafeteria', label: '学食', Icon: Utensils },
+  { id: 'bus', label: 'バス', Icon: Bus },
+  { id: 'circle', label: 'サークル', Icon: UsersRound },
+];
 
 function CameraRig({ targetPosition }) {
   const controlsRef = useRef();
@@ -45,6 +54,46 @@ function CameraRig({ targetPosition }) {
 }
 
 function App() {
+  const [activeTab, setActiveTab] = useState('map');
+
+  const activeTabData = tabs.find(tab => tab.id === activeTab) ?? tabs[0];
+
+  return (
+    <div className="app-shell">
+      <div className="app-content">
+        {activeTab === 'map' ? (
+          <CampusMap />
+        ) : (
+          <section className="blank-view" aria-label={activeTabData.label}>
+            <h1>{activeTabData.label}</h1>
+          </section>
+        )}
+      </div>
+
+      <nav className="bottom-tabs" aria-label="メインメニュー">
+        {tabs.map(({ id, label, Icon }) => {
+          const isActive = activeTab === id;
+
+          return (
+            <button
+              key={id}
+              type="button"
+              className={`tab-button${isActive ? ' is-active' : ''}`}
+              aria-pressed={isActive}
+              aria-label={`${label}を開く`}
+              onClick={() => setActiveTab(id)}
+            >
+              <Icon aria-hidden="true" strokeWidth={isActive ? 2.8 : 2.4} />
+              <span>{label}</span>
+            </button>
+          );
+        })}
+      </nav>
+    </div>
+  );
+}
+
+function CampusMap() {
   const [buildings, setBuildings] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [cameraTarget, setCameraTarget] = useState(new THREE.Vector3(0, 0, 0));
@@ -74,7 +123,7 @@ function App() {
   };
 
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'relative' }}>
+    <div className="map-view">
       {/* onPointerMissed で背景クリック時に選択解除 */}
       <Canvas shadows onPointerMissed={resetSelection}>
         <OrthographicCamera makeDefault position={[50, 50, 50]} zoom={25} near={-100} far={1000} />
@@ -113,59 +162,22 @@ function App() {
 
       {/* UI オーバーレイ (詳細情報) */}
       {selectedFloor && (
-        <div style={{
-          position: 'absolute',
-          bottom: '30px',
-          left: '30px',
-          background: 'rgba(255, 255, 255, 0.9)',
-          padding: '20px',
-          borderRadius: '12px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-          backdropFilter: 'blur(8px)',
-          fontFamily: 'sans-serif',
-          minWidth: '250px',
-          zIndex: 10
-        }}>
-          <h2 style={{ margin: '0 0 10px 0', fontSize: '1.2rem', color: '#333' }}>
+        <div className="floor-panel">
+          <h2>
             {selectedFloor.building.name} - {selectedFloor.floor.name}
           </h2>
-          <p style={{ margin: '0 0 15px 0', color: '#666' }}>
+          <p>
             {selectedFloor.floor.details}
           </p>
-          <button 
-            onClick={resetSelection}
-            style={{
-              background: '#333',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={(e) => e.target.style.background = '#555'}
-            onMouseOut={(e) => e.target.style.background = '#333'}
-          >
+          <button type="button" onClick={resetSelection}>
             閉じる
           </button>
         </div>
       )}
       
       {/* タイトルUI */}
-      <div style={{
-        position: 'absolute',
-        top: '30px',
-        left: '30px',
-        pointerEvents: 'none',
-        zIndex: 10
-      }}>
-        <h1 style={{ margin: 0, fontSize: '2rem', color: '#333', textShadow: '0 2px 10px rgba(255,255,255,0.8)' }}>
-          University Campus Map
-        </h1>
-        <p style={{ margin: '5px 0 0 0', color: '#666', fontWeight: 500 }}>
-          3D Interactive Model
-        </p>
+      <div className="map-title">
+        <h1>マップ</h1>
       </div>
     </div>
   );
