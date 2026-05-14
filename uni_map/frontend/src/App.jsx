@@ -14,6 +14,55 @@ const tabs = [
   { id: 'circle', label: 'サークル', Icon: UsersRound },
 ];
 
+const cafeteriaVenues = [
+  {
+    id: 'terrace',
+    name: '802A TERRACE',
+    detail: '定食とカレーを中心に、昼休みに選びやすいメニューをまとめています。',
+    highlight: '定食・カレー',
+    items: [
+      { name: '日替わりランチ', price: 650, category: '定食' },
+      { name: '唐揚げ定食', price: 620, category: '定食' },
+      { name: 'チキンカレー', price: 520, category: 'カレー' },
+      { name: 'カツカレー', price: 680, category: 'カレー' },
+      { name: 'ハンバーグプレート', price: 700, category: 'プレート' },
+      { name: 'ライス単品', price: 160, category: 'サイド' },
+    ],
+  },
+  {
+    id: 'rose',
+    name: 'ROSE kitchen',
+    detail: '軽めの食事や洋食系のメニューを探すときに見やすい構成です。',
+    highlight: '洋食・軽食',
+    items: [
+      { name: 'ローストチキンプレート', price: 720, category: 'プレート' },
+      { name: 'ミートソースパスタ', price: 580, category: 'パスタ' },
+      { name: 'カルボナーラ', price: 620, category: 'パスタ' },
+      { name: 'オムライス', price: 640, category: 'ごはん' },
+      { name: 'サラダボウル', price: 460, category: 'サラダ' },
+      { name: 'スープセット', price: 280, category: 'サイド' },
+    ],
+  },
+  {
+    id: 'foods-fuu',
+    name: 'FOODS FUU',
+    detail: '丼もの、麺類、すぐ食べたいメニューを中心に掲載しています。',
+    highlight: '丼・麺',
+    items: [
+      { name: 'かけうどん', price: 360, category: 'うどん' },
+      { name: 'きつねうどん', price: 430, category: 'うどん' },
+      { name: '醤油ラーメン', price: 520, category: 'ラーメン' },
+      { name: 'カツ丼', price: 620, category: '丼' },
+      { name: '親子丼', price: 560, category: '丼' },
+      { name: 'ミニサラダ', price: 180, category: 'サイド' },
+    ],
+  },
+];
+
+function formatPrice(price) {
+  return `¥${price.toLocaleString('ja-JP')}`;
+}
+
 function CameraRig({ targetPosition }) {
   const controlsRef = useRef();
   const isTransitioning = useRef(false);
@@ -64,6 +113,8 @@ function App() {
       <div className="app-content">
         {activeTab === 'map' ? (
           <CampusMap />
+        ) : activeTab === 'cafeteria' ? (
+          <CafeteriaMenu />
         ) : (
           <section className="blank-view" aria-label={activeTabData.label}>
             <h1>{activeTabData.label}</h1>
@@ -91,6 +142,63 @@ function App() {
         })}
       </nav>
     </div>
+  );
+}
+
+function CafeteriaMenu() {
+  const [activeVenueId, setActiveVenueId] = useState(cafeteriaVenues[0].id);
+  const activeVenue = cafeteriaVenues.find(venue => venue.id === activeVenueId) ?? cafeteriaVenues[0];
+
+  return (
+    <section className="cafeteria-view" aria-label="学食メニュー">
+      <header className="cafeteria-header">
+        <div>
+          <p className="section-kicker">Cafeteria</p>
+          <h1>学食メニュー</h1>
+        </div>
+        <div className="menu-count" aria-label={`${activeVenue.items.length}件のメニュー`}>
+          {activeVenue.items.length}
+          <span>品</span>
+        </div>
+      </header>
+
+      <div className="venue-tabs" role="tablist" aria-label="学食の場所">
+        {cafeteriaVenues.map(venue => {
+          const isActive = venue.id === activeVenueId;
+
+          return (
+            <button
+              key={venue.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              className={`venue-button${isActive ? ' is-active' : ''}`}
+              onClick={() => setActiveVenueId(venue.id)}
+            >
+              {venue.name}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="venue-summary">
+        <span>{activeVenue.highlight}</span>
+        <p>{activeVenue.detail}</p>
+      </div>
+
+      <div className="menu-grid">
+        {activeVenue.items.map(item => (
+          <article className="menu-card" key={`${activeVenue.id}-${item.name}`}>
+            <span className="menu-category">{item.category}</span>
+            <h2>{item.name}</h2>
+            <p className="menu-price">
+              {formatPrice(item.price)}
+              <span>（税込）</span>
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -147,7 +255,7 @@ function CampusMap() {
 
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
           <planeGeometry args={[100, 100]} />
-          <meshStandardMaterial color="#f0f0f5" />
+          <meshStandardMaterial color="#eef1f7" />
         </mesh>
         
         <ContactShadows position={[0, -0.09, 0]} opacity={0.4} scale={50} blur={2} far={10} />
