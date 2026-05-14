@@ -3,8 +3,21 @@
 }
 
 :root {
-  color: #f6f6f7;
-  background: #090909;
+  --tut-blue: #354b97;
+  --tut-blue-deep: #24377f;
+  --tut-blue-ink: #17265f;
+  --tut-blue-soft: #eef2ff;
+  --tut-silver: #b7bac1;
+  --tut-silver-soft: #eef0f5;
+  --tut-surface: #ffffff;
+  --tut-text: #171b20;
+  --tut-muted: #5d6471;
+  --tut-line: #d9deec;
+  --tut-page: #f5f7fc;
+  --tut-shadow: 0 16px 34px rgba(31, 42, 68, 0.12);
+
+  color: var(--tut-text);
+  background: var(--tut-page);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -17,7 +30,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #f0f0f5;
+  background-color: var(--tut-page);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -35,7 +48,7 @@ button {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #090909;
+  background: var(--tut-page);
 }
 
 .app-content {
@@ -48,7 +61,8 @@ button {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #f0f0f5;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f5f7fc 54%, #eef1f7 100%);
 }
 
 .map-title {
@@ -56,16 +70,21 @@ button {
   top: max(24px, env(safe-area-inset-top));
   left: max(24px, env(safe-area-inset-left));
   z-index: 10;
+  padding: 12px 16px 12px 14px;
+  border-left: 5px solid var(--tut-blue);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 12px 28px rgba(31, 42, 68, 0.1);
+  backdrop-filter: blur(12px);
   pointer-events: none;
 }
 
 .map-title h1 {
   margin: 0;
-  color: #1f2933;
+  color: var(--tut-blue-ink);
   font-size: 32px;
   font-weight: 800;
   letter-spacing: 0;
-  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.85);
 }
 
 .floor-panel {
@@ -76,11 +95,12 @@ button {
   min-width: 250px;
   max-width: min(360px, calc(100vw - 32px));
   padding: 18px;
-  color: #29323d;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.62);
+  color: var(--tut-text);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(217, 222, 236, 0.9);
+  border-top: 4px solid var(--tut-blue);
   border-radius: 8px;
-  box-shadow: 0 12px 34px rgba(17, 24, 39, 0.15);
+  box-shadow: var(--tut-shadow);
   backdrop-filter: blur(12px);
 }
 
@@ -92,7 +112,7 @@ button {
 
 .floor-panel p {
   margin: 0 0 14px;
-  color: #5c6875;
+  color: var(--tut-muted);
   line-height: 1.55;
 }
 
@@ -101,14 +121,14 @@ button {
   border-radius: 6px;
   padding: 8px 16px;
   color: #fff;
-  background: #222831;
+  background: var(--tut-blue);
   font-weight: 700;
   cursor: pointer;
   transition: background 160ms ease, transform 160ms ease;
 }
 
 .floor-panel button:hover {
-  background: #374151;
+  background: var(--tut-blue-deep);
 }
 
 .floor-panel button:active {
@@ -116,11 +136,12 @@ button {
 }
 
 .floor-panel button:focus-visible {
-  outline: 3px solid rgba(26, 115, 232, 0.45);
+  outline: 3px solid rgba(53, 75, 151, 0.34);
   outline-offset: 2px;
 }
 
 .cafeteria-view {
+<<<<<<< HEAD
   height: 100%;
   padding: calc(28px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-left)) calc(120px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-right));
   overflow-x: hidden;
@@ -131,6 +152,14 @@ button {
   overscroll-behavior-y: contain;
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
+=======
+  min-height: 100%;
+  padding: calc(28px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-left)) calc(116px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-right));
+  overflow-y: auto;
+  color: var(--tut-text);
+  background:
+    linear-gradient(180deg, #ffffff 0%, var(--tut-page) 42%, #eef1f7 100%);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
 }
 
 .cafeteria-header {
@@ -144,7 +173,11 @@ button {
 
 .section-kicker {
   margin: 0 0 5px;
+<<<<<<< HEAD
   color: #354b97;
+=======
+  color: var(--tut-blue);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0;
@@ -153,7 +186,11 @@ button {
 
 .cafeteria-header h1 {
   margin: 0;
+<<<<<<< HEAD
   color: #171b20;
+=======
+  color: var(--tut-text);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 31px;
   font-weight: 850;
   line-height: 1.15;
@@ -170,7 +207,11 @@ button {
   flex-direction: column;
   border-radius: 8px;
   color: #fff;
+<<<<<<< HEAD
   background: #354b97;
+=======
+  background: var(--tut-blue);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 22px;
   font-weight: 850;
   line-height: 1;
@@ -204,7 +245,11 @@ button {
 .venue-button {
   min-width: max-content;
   min-height: 44px;
+<<<<<<< HEAD
   border: 1px solid #d9deec;
+=======
+  border: 1px solid var(--tut-line);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   border-radius: 8px;
   padding: 0 18px;
   color: #293241;
@@ -219,9 +264,15 @@ button {
 }
 
 .venue-button:hover {
+<<<<<<< HEAD
   border-color: #354b97;
   color: #24377f;
   background: #eef2ff;
+=======
+  border-color: var(--tut-blue);
+  color: var(--tut-blue-deep);
+  background: var(--tut-blue-soft);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
 }
 
 .venue-button:active {
@@ -229,9 +280,15 @@ button {
 }
 
 .venue-button.is-active {
+<<<<<<< HEAD
   border-color: #354b97;
   color: #fff;
   background: #354b97;
+=======
+  border-color: var(--tut-blue);
+  color: #fff;
+  background: var(--tut-blue);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   box-shadow: 0 10px 24px rgba(53, 75, 151, 0.26);
 }
 
@@ -244,13 +301,21 @@ button {
   max-width: 1040px;
   margin: 12px auto 18px;
   padding: 14px 0 14px 16px;
+<<<<<<< HEAD
   border-left: 4px solid #354b97;
+=======
+  border-left: 4px solid var(--tut-blue);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
 }
 
 .venue-summary span {
   display: block;
   margin-bottom: 5px;
+<<<<<<< HEAD
   color: #24377f;
+=======
+  color: var(--tut-blue-deep);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 14px;
   font-weight: 850;
 }
@@ -258,7 +323,11 @@ button {
 .venue-summary p {
   max-width: 680px;
   margin: 0;
+<<<<<<< HEAD
   color: #5d6471;
+=======
+  color: var(--tut-muted);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 14px;
   font-weight: 600;
   line-height: 1.6;
@@ -279,7 +348,11 @@ button {
   justify-content: space-between;
   padding: 16px;
   border: 1px solid #dce2ee;
+<<<<<<< HEAD
   border-top: 4px solid #eef0f5;
+=======
+  border-top: 4px solid var(--tut-silver-soft);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 12px 28px rgba(31, 42, 68, 0.07);
@@ -292,8 +365,13 @@ button {
   border: 1px solid #d9e0f8;
   border-radius: 999px;
   padding: 5px 10px;
+<<<<<<< HEAD
   color: #24377f;
   background: #eef2ff;
+=======
+  color: var(--tut-blue-deep);
+  background: var(--tut-blue-soft);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 12px;
   font-weight: 850;
   line-height: 1;
@@ -304,7 +382,11 @@ button {
 .menu-card h2 {
   min-height: 46px;
   margin: 18px 0 14px;
+<<<<<<< HEAD
   color: #171b20;
+=======
+  color: var(--tut-text);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 21px;
   font-weight: 850;
   line-height: 1.22;
@@ -315,7 +397,11 @@ button {
 
 .menu-price {
   margin: 0;
+<<<<<<< HEAD
   color: #24377f;
+=======
+  color: var(--tut-blue-deep);
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   font-size: 22px;
   font-weight: 850;
   line-height: 1.2;
@@ -335,13 +421,12 @@ button {
   place-items: center;
   padding: 32px 20px calc(112px + env(safe-area-inset-bottom));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
-    #090909;
+    linear-gradient(180deg, #ffffff 0%, var(--tut-page) 55%, #eef1f7 100%);
 }
 
 .blank-view h1 {
   margin: 0;
-  color: #f6f6f7;
+  color: var(--tut-blue-ink);
   font-size: 34px;
   font-weight: 800;
   letter-spacing: 0;
@@ -358,9 +443,9 @@ button {
   gap: 2px;
   min-height: calc(82px + env(safe-area-inset-bottom));
   padding: 8px max(10px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
-  background: rgba(9, 9, 9, 0.93);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 -18px 32px rgba(0, 0, 0, 0.22);
+  background: rgba(255, 255, 255, 0.94);
+  border-top: 1px solid rgba(217, 222, 236, 0.88);
+  box-shadow: 0 -18px 32px rgba(31, 42, 68, 0.12);
   backdrop-filter: blur(18px);
 }
 
@@ -372,9 +457,9 @@ button {
   justify-content: center;
   flex-direction: column;
   gap: 5px;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 8px;
-  color: #9ca0a6;
+  color: #7a808c;
   background: transparent;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -398,8 +483,8 @@ button {
 }
 
 .tab-button:hover {
-  color: #d8dadd;
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--tut-blue-deep);
+  background: var(--tut-blue-soft);
 }
 
 .tab-button:active {
@@ -407,7 +492,10 @@ button {
 }
 
 .tab-button.is-active {
-  color: #fff;
+  color: var(--tut-blue);
+  border-color: #d9e0f8;
+  background: var(--tut-blue-soft);
+  box-shadow: inset 0 0 0 1px rgba(53, 75, 151, 0.08);
 }
 
 .tab-button.is-active span {
@@ -415,7 +503,7 @@ button {
 }
 
 .tab-button:focus-visible {
-  outline: 3px solid rgba(255, 255, 255, 0.28);
+  outline: 3px solid rgba(53, 75, 151, 0.28);
   outline-offset: -3px;
 }
 
@@ -423,6 +511,7 @@ button {
   .map-title {
     top: max(18px, env(safe-area-inset-top));
     left: max(18px, env(safe-area-inset-left));
+    padding: 10px 14px 10px 12px;
   }
 
   .map-title h1 {
@@ -438,7 +527,11 @@ button {
   }
 
   .cafeteria-view {
+<<<<<<< HEAD
     padding: calc(22px + env(safe-area-inset-top)) max(14px, env(safe-area-inset-left)) calc(108px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-right));
+=======
+    padding: calc(22px + env(safe-area-inset-top)) max(14px, env(safe-area-inset-left)) calc(104px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-right));
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
   }
 
   .cafeteria-header {

@@ -27,8 +27,11 @@ const cafeteriaVenues = [
       { name: 'カツカレー', price: 680, category: 'カレー' },
       { name: 'ハンバーグプレート', price: 700, category: 'プレート' },
       { name: 'ライス単品', price: 160, category: 'サイド' },
+<<<<<<< HEAD
       { name: '味噌汁', price: 90, category: 'サイド' },
       { name: '小鉢', price: 120, category: 'サイド' },
+=======
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
     ],
   },
   {
@@ -43,8 +46,11 @@ const cafeteriaVenues = [
       { name: 'オムライス', price: 640, category: 'ごはん' },
       { name: 'サラダボウル', price: 460, category: 'サラダ' },
       { name: 'スープセット', price: 280, category: 'サイド' },
+<<<<<<< HEAD
       { name: 'フライドポテト', price: 250, category: '軽食' },
       { name: 'ドリンクセット', price: 180, category: 'ドリンク' },
+=======
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
     ],
   },
   {
@@ -59,8 +65,11 @@ const cafeteriaVenues = [
       { name: 'カツ丼', price: 620, category: '丼' },
       { name: '親子丼', price: 560, category: '丼' },
       { name: 'ミニサラダ', price: 180, category: 'サイド' },
+<<<<<<< HEAD
       { name: '半ライス', price: 120, category: 'サイド' },
       { name: '温泉卵', price: 100, category: 'トッピング' },
+=======
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
     ],
   },
 ];
@@ -153,6 +162,7 @@ function App() {
 
 function CafeteriaMenu() {
   const [activeVenueId, setActiveVenueId] = useState(cafeteriaVenues[0].id);
+<<<<<<< HEAD
   const cafeteriaViewRef = useRef(null);
   const swipeStart = useRef(null);
   const activeVenueIndex = cafeteriaVenues.findIndex(venue => venue.id === activeVenueId);
@@ -208,6 +218,12 @@ function CafeteriaMenu() {
         swipeStart.current = null;
       }}
     >
+=======
+  const activeVenue = cafeteriaVenues.find(venue => venue.id === activeVenueId) ?? cafeteriaVenues[0];
+
+  return (
+    <section className="cafeteria-view" aria-label="学食メニュー">
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
       <header className="cafeteria-header">
         <div>
           <p className="section-kicker">Cafeteria</p>
@@ -230,7 +246,11 @@ function CafeteriaMenu() {
               role="tab"
               aria-selected={isActive}
               className={`venue-button${isActive ? ' is-active' : ''}`}
+<<<<<<< HEAD
               onClick={() => showVenue(cafeteriaVenues.findIndex(item => item.id === venue.id))}
+=======
+              onClick={() => setActiveVenueId(venue.id)}
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
             >
               {venue.name}
             </button>
@@ -243,7 +263,11 @@ function CafeteriaMenu() {
         <p>{activeVenue.detail}</p>
       </div>
 
+<<<<<<< HEAD
       <div className="menu-grid" aria-live="polite">
+=======
+      <div className="menu-grid">
+>>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
         {activeVenue.items.map(item => (
           <article className="menu-card" key={`${activeVenue.id}-${item.name}`}>
             <span className="menu-category">{item.category}</span>
@@ -312,7 +336,7 @@ function CampusMap() {
 
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
           <planeGeometry args={[100, 100]} />
-          <meshStandardMaterial color="#f0f0f5" />
+          <meshStandardMaterial color="#eef1f7" />
         </mesh>
         
         <ContactShadows position={[0, -0.09, 0]} opacity={0.4} scale={50} blur={2} far={10} />

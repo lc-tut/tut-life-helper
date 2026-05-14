@@ -1,14 +1,67 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>frontend</title>
+  <meta name="theme-color" content="#354b97" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="TUT MAPS" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="application-name" content="TUT MAPS" />
+  <meta name="description" content="TUT MAPSは東京工科大学のキャンパスマップ、地図、学食メニュー、バス情報、時間割をまとめて確認できるキャンパス生活支援Webアプリです。" />
+  <meta name="keywords" content="TUT MAPS, TUT, 東京工科大学, 東京工科大学 マップ, 東京工科大学 地図, 東京工科大学 学食, 東京工科大学 バス, 東京工科大学 時間割, キャンパスマップ" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:site_name" content="TUT MAPS" />
+  <meta property="og:title" content="TUT MAPS｜東京工科大学 マップ・学食・バス・時間割" />
+  <meta property="og:description" content="東京工科大学のマップ、地図、学食、バス、時間割を確認できるキャンパス生活支援Webアプリ。" />
+  <meta property="og:image" content="/icons/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="TUT MAPS｜東京工科大学 マップ・学食・バス・時間割" />
+  <meta name="twitter:description" content="東京工科大学のマップ、地図、学食、バス、時間割を確認できるキャンパス生活支援Webアプリ。" />
+  <meta name="twitter:image" content="/icons/icon-512.png" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TUT MAPS",
+      "alternateName": [
+        "東京工科大学 マップ",
+        "東京工科大学 地図",
+        "東京工科大学 学食",
+        "東京工科大学 バス",
+        "東京工科大学 時間割",
+        "TUT"
+      ],
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "ja-JP",
+      "description": "東京工科大学のキャンパスマップ、地図、学食メニュー、バス情報、時間割をまとめて確認できるWebアプリです。",
+      "keywords": "TUT MAPS, TUT, 東京工科大学, 東京工科大学 マップ, 東京工科大学 地図, 東京工科大学 学食, 東京工科大学 バス, 東京工科大学 時間割",
+      "about": {
+        "@type": "CollegeOrUniversity",
+        "name": "東京工科大学",
+        "alternateName": "Tokyo University of Technology"
+      }
+    }
+  </script>
+  <title>TUT MAPS｜東京工科大学 マップ・学食・バス・時間割</title>
 </head>
 
 <body>
+  <noscript>
+    <main>
+      <h1>TUT MAPS</h1>
+      <p>
+        TUT MAPSは、東京工科大学のキャンパスマップ、地図、学食メニュー、
+        バス情報、時間割を確認できるキャンパス生活支援Webアプリです。
+      </p>
+    </main>
+  </noscript>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

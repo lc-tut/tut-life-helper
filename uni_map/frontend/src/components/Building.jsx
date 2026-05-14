@@ -46,7 +46,7 @@ export default function Building({ data, selectedFloor, onFloorClick }) {
 function Floor({ size, isSelected, onClick }) {
   const [hovered, setHover] = useState(false);
 
-  const matColor = isSelected ? '#d0e8ff' : hovered ? '#e6f7ff' : '#ffffff';
+  const matColor = isSelected ? '#dfe6ff' : hovered ? '#eef2ff' : '#ffffff';
 
   // 選択時は BackSide（裏面のみ）を描画することで、
   // カメラの角度に関わらず常に手前の壁と天井が透けて奥の壁と床が見えるようになります。
