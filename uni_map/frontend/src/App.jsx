@@ -280,10 +280,6 @@ function CafeteriaMenu() {
           <p className="section-kicker">Cafeteria</p>
           <h1>学食メニュー</h1>
         </div>
-        <div className="menu-count" aria-label={`${activeVenue.items.length}件のメニュー`}>
-          {activeVenue.items.length}
-          <span>品</span>
-        </div>
       </header>
 
       <div className="venue-tabs" role="tablist" aria-label="学食の場所">

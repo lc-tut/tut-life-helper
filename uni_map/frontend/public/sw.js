@@ -1,13 +1,13 @@
-const CACHE_NAME = 'tut-maps-v5';
+const CACHE_NAME = 'tut-maps-v6';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/favicon.png',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/maskable-icon-512.png',
-  '/icons/apple-touch-icon.png',
+  '/favicon-20260514.png',
+  '/icons/tut-maps-icon-192-20260514.png',
+  '/icons/tut-maps-icon-512-20260514.png',
+  '/icons/tut-maps-maskable-512-20260514.png',
+  '/icons/apple-touch-icon-20260514.png',
 ];
 
 self.addEventListener('install', event => {

@@ -524,29 +524,6 @@ button {
   letter-spacing: 0;
 }
 
-.menu-count {
-  display: flex;
-  width: 58px;
-  height: 58px;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 8px;
-  color: #fff;
-  background: var(--tut-blue);
-  font-size: 22px;
-  font-weight: 850;
-  line-height: 1;
-  box-shadow: 0 14px 28px rgba(53, 75, 151, 0.22);
-}
-
-.menu-count span {
-  margin-top: 4px;
-  font-size: 12px;
-  font-weight: 750;
-}
-
 .venue-tabs {
   position: sticky;
   top: 0;
@@ -876,12 +853,6 @@ button {
 
   .cafeteria-header h1 {
     font-size: 28px;
-  }
-
-  .menu-count {
-    width: 52px;
-    height: 52px;
-    font-size: 20px;
   }
 
   .venue-tabs {
