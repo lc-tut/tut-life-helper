@@ -11,7 +11,7 @@ const tabs = [
   { id: 'timetable', label: '時間割', Icon: CalendarDays },
   { id: 'cafeteria', label: '学食', Icon: Utensils },
   { id: 'bus', label: 'バス', Icon: Bus },
-  { id: 'circle', label: 'サークル', Icon: UsersRound },
+  { id: 'circle', label: '交流', Icon: UsersRound },
 ];
 
 const cafeteriaVenues = [
