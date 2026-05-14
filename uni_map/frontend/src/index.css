@@ -120,6 +120,215 @@ button {
   outline-offset: 2px;
 }
 
+.cafeteria-view {
+  height: 100%;
+  padding: calc(28px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-left)) calc(120px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-right));
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #171b20;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f5f7fc 42%, #eef1f7 100%);
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cafeteria-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1040px;
+  margin: 0 auto 22px;
+}
+
+.section-kicker {
+  margin: 0 0 5px;
+  color: #354b97;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.cafeteria-header h1 {
+  margin: 0;
+  color: #171b20;
+  font-size: 31px;
+  font-weight: 850;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.menu-count {
+  display: flex;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 8px;
+  color: #fff;
+  background: #354b97;
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1;
+  box-shadow: 0 14px 28px rgba(53, 75, 151, 0.22);
+}
+
+.menu-count span {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.venue-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  max-width: 1040px;
+  margin: 0 auto;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 0 14px;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.94) 72%, rgba(245, 247, 252, 0));
+  scrollbar-width: none;
+}
+
+.venue-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.venue-button {
+  min-width: max-content;
+  min-height: 44px;
+  border: 1px solid #d9deec;
+  border-radius: 8px;
+  padding: 0 18px;
+  color: #293241;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 8px 20px rgba(31, 42, 68, 0.06);
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.venue-button:hover {
+  border-color: #354b97;
+  color: #24377f;
+  background: #eef2ff;
+}
+
+.venue-button:active {
+  transform: translateY(1px);
+}
+
+.venue-button.is-active {
+  border-color: #354b97;
+  color: #fff;
+  background: #354b97;
+  box-shadow: 0 10px 24px rgba(53, 75, 151, 0.26);
+}
+
+.venue-button:focus-visible {
+  outline: 3px solid rgba(53, 75, 151, 0.28);
+  outline-offset: 2px;
+}
+
+.venue-summary {
+  max-width: 1040px;
+  margin: 12px auto 18px;
+  padding: 14px 0 14px 16px;
+  border-left: 4px solid #354b97;
+}
+
+.venue-summary span {
+  display: block;
+  margin-bottom: 5px;
+  color: #24377f;
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.venue-summary p {
+  max-width: 680px;
+  margin: 0;
+  color: #5d6471;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.menu-card {
+  display: flex;
+  min-height: 154px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid #dce2ee;
+  border-top: 4px solid #eef0f5;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(31, 42, 68, 0.07);
+}
+
+.menu-category {
+  align-self: flex-start;
+  max-width: 100%;
+  overflow: hidden;
+  border: 1px solid #d9e0f8;
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: #24377f;
+  background: #eef2ff;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-card h2 {
+  min-height: 46px;
+  margin: 18px 0 14px;
+  color: #171b20;
+  font-size: 21px;
+  font-weight: 850;
+  line-height: 1.22;
+  letter-spacing: 0;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
+.menu-price {
+  margin: 0;
+  color: #24377f;
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.menu-price span {
+  margin-left: 4px;
+  color: #707782;
+  font-size: 14px;
+  font-weight: 750;
+}
+
 .blank-view {
   display: grid;
   min-height: 100%;
@@ -226,6 +435,76 @@ button {
     bottom: calc(98px + env(safe-area-inset-bottom));
     min-width: 0;
     max-width: none;
+  }
+
+  .cafeteria-view {
+    padding: calc(22px + env(safe-area-inset-top)) max(14px, env(safe-area-inset-left)) calc(108px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-right));
+  }
+
+  .cafeteria-header {
+    margin-bottom: 16px;
+  }
+
+  .cafeteria-header h1 {
+    font-size: 28px;
+  }
+
+  .menu-count {
+    width: 52px;
+    height: 52px;
+    font-size: 20px;
+  }
+
+  .venue-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-inline: 0;
+    overflow: visible;
+    padding: 8px 0 13px;
+  }
+
+  .venue-button {
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 7px;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .venue-summary {
+    margin: 8px auto 16px;
+  }
+
+  .venue-summary p {
+    font-size: 13px;
+  }
+
+  .menu-grid {
+    gap: 10px;
+  }
+
+  .menu-card {
+    min-height: 148px;
+    padding: 13px;
+  }
+
+  .menu-card h2 {
+    min-height: 44px;
+    margin: 15px 0 12px;
+    font-size: 17px;
+  }
+
+  .menu-price {
+    font-size: 19px;
+  }
+
+  .menu-price span {
+    display: block;
+    margin: 3px 0 0;
+    font-size: 12px;
   }
 
   .bottom-tabs {

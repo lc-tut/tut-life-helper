@@ -14,6 +14,61 @@ const tabs = [
   { id: 'circle', label: 'サークル', Icon: UsersRound },
 ];
 
+const cafeteriaVenues = [
+  {
+    id: 'terrace',
+    name: '802A TERRACE',
+    detail: '定食とカレーを中心に、昼休みに選びやすいメニューをまとめています。',
+    highlight: '定食・カレー',
+    items: [
+      { name: '日替わりランチ', price: 650, category: '定食' },
+      { name: '唐揚げ定食', price: 620, category: '定食' },
+      { name: 'チキンカレー', price: 520, category: 'カレー' },
+      { name: 'カツカレー', price: 680, category: 'カレー' },
+      { name: 'ハンバーグプレート', price: 700, category: 'プレート' },
+      { name: 'ライス単品', price: 160, category: 'サイド' },
+      { name: '味噌汁', price: 90, category: 'サイド' },
+      { name: '小鉢', price: 120, category: 'サイド' },
+    ],
+  },
+  {
+    id: 'rose',
+    name: 'ROSE kitchen',
+    detail: '軽めの食事や洋食系のメニューを探すときに見やすい構成です。',
+    highlight: '洋食・軽食',
+    items: [
+      { name: 'ローストチキンプレート', price: 720, category: 'プレート' },
+      { name: 'ミートソースパスタ', price: 580, category: 'パスタ' },
+      { name: 'カルボナーラ', price: 620, category: 'パスタ' },
+      { name: 'オムライス', price: 640, category: 'ごはん' },
+      { name: 'サラダボウル', price: 460, category: 'サラダ' },
+      { name: 'スープセット', price: 280, category: 'サイド' },
+      { name: 'フライドポテト', price: 250, category: '軽食' },
+      { name: 'ドリンクセット', price: 180, category: 'ドリンク' },
+    ],
+  },
+  {
+    id: 'foods-fuu',
+    name: 'FOODS FUU',
+    detail: '丼もの、麺類、すぐ食べたいメニューを中心に掲載しています。',
+    highlight: '丼・麺',
+    items: [
+      { name: 'かけうどん', price: 360, category: 'うどん' },
+      { name: 'きつねうどん', price: 430, category: 'うどん' },
+      { name: '醤油ラーメン', price: 520, category: 'ラーメン' },
+      { name: 'カツ丼', price: 620, category: '丼' },
+      { name: '親子丼', price: 560, category: '丼' },
+      { name: 'ミニサラダ', price: 180, category: 'サイド' },
+      { name: '半ライス', price: 120, category: 'サイド' },
+      { name: '温泉卵', price: 100, category: 'トッピング' },
+    ],
+  },
+];
+
+function formatPrice(price) {
+  return `¥${price.toLocaleString('ja-JP')}`;
+}
+
 function CameraRig({ targetPosition }) {
   const controlsRef = useRef();
   const isTransitioning = useRef(false);
@@ -64,6 +119,8 @@ function App() {
       <div className="app-content">
         {activeTab === 'map' ? (
           <CampusMap />
+        ) : activeTab === 'cafeteria' ? (
+          <CafeteriaMenu />
         ) : (
           <section className="blank-view" aria-label={activeTabData.label}>
             <h1>{activeTabData.label}</h1>
@@ -91,6 +148,114 @@ function App() {
         })}
       </nav>
     </div>
+  );
+}
+
+function CafeteriaMenu() {
+  const [activeVenueId, setActiveVenueId] = useState(cafeteriaVenues[0].id);
+  const cafeteriaViewRef = useRef(null);
+  const swipeStart = useRef(null);
+  const activeVenueIndex = cafeteriaVenues.findIndex(venue => venue.id === activeVenueId);
+  const activeVenue = cafeteriaVenues[activeVenueIndex] ?? cafeteriaVenues[0];
+
+  const showVenue = (nextIndex) => {
+    const maxIndex = cafeteriaVenues.length - 1;
+    const safeIndex = Math.min(Math.max(nextIndex, 0), maxIndex);
+    const nextVenueId = cafeteriaVenues[safeIndex].id;
+
+    if (nextVenueId === activeVenueId) {
+      return;
+    }
+
+    setActiveVenueId(nextVenueId);
+    requestAnimationFrame(() => {
+      cafeteriaViewRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  };
+
+  const handlePointerDown = (event) => {
+    swipeStart.current = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    };
+  };
+
+  const handlePointerUp = (event) => {
+    if (!swipeStart.current || swipeStart.current.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const diffX = event.clientX - swipeStart.current.x;
+    const diffY = event.clientY - swipeStart.current.y;
+    swipeStart.current = null;
+
+    if (Math.abs(diffX) < 56 || Math.abs(diffX) < Math.abs(diffY) * 1.25) {
+      return;
+    }
+
+    showVenue(activeVenueIndex + (diffX < 0 ? 1 : -1));
+  };
+
+  return (
+    <section
+      ref={cafeteriaViewRef}
+      className="cafeteria-view"
+      aria-label="学食メニュー"
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={() => {
+        swipeStart.current = null;
+      }}
+    >
+      <header className="cafeteria-header">
+        <div>
+          <p className="section-kicker">Cafeteria</p>
+          <h1>学食メニュー</h1>
+        </div>
+        <div className="menu-count" aria-label={`${activeVenue.items.length}件のメニュー`}>
+          {activeVenue.items.length}
+          <span>品</span>
+        </div>
+      </header>
+
+      <div className="venue-tabs" role="tablist" aria-label="学食の場所">
+        {cafeteriaVenues.map(venue => {
+          const isActive = venue.id === activeVenueId;
+
+          return (
+            <button
+              key={venue.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              className={`venue-button${isActive ? ' is-active' : ''}`}
+              onClick={() => showVenue(cafeteriaVenues.findIndex(item => item.id === venue.id))}
+            >
+              {venue.name}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="venue-summary">
+        <span>{activeVenue.highlight}</span>
+        <p>{activeVenue.detail}</p>
+      </div>
+
+      <div className="menu-grid" aria-live="polite">
+        {activeVenue.items.map(item => (
+          <article className="menu-card" key={`${activeVenue.id}-${item.name}`}>
+            <span className="menu-category">{item.category}</span>
+            <h2>{item.name}</h2>
+            <p className="menu-price">
+              {formatPrice(item.price)}
+              <span>（税込）</span>
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
