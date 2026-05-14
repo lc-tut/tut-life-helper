@@ -70,15 +70,15 @@ function formatPrice(price) {
 }
 
 const timetableRows = [
-  { id: 'period-1', label: '1時限', type: '授業', time: '09:00〜10:30', duration: '90分' },
+  { id: 'period-1', label: '1時限', type: '授業', time: '08:50〜10:30', duration: '100分' },
   { id: 'break-1', label: '休み時間', type: '休み時間', time: '10:30〜10:45', duration: '15分' },
-  { id: 'period-2', label: '2時限', type: '授業', time: '10:45〜12:15', duration: '90分' },
-  { id: 'lunch', label: '昼休み', type: '休み時間', time: '12:15〜13:15', duration: '60分' },
-  { id: 'period-3', label: '3時限', type: '授業', time: '13:15〜14:45', duration: '90分' },
-  { id: 'break-3', label: '休み時間', type: '休み時間', time: '14:45〜15:00', duration: '15分' },
-  { id: 'period-4', label: '4時限', type: '授業', time: '15:00〜16:30', duration: '90分' },
-  { id: 'break-4', label: '休み時間', type: '休み時間', time: '16:30〜16:45', duration: '15分' },
-  { id: 'period-5', label: '5時限', type: '授業', time: '16:45〜18:15', duration: '90分' },
+  { id: 'period-2', label: '2時限', type: '授業', time: '10:45〜12:25', duration: '100分' },
+  { id: 'lunch', label: '昼休み', type: '休み時間', time: '12:25〜13:15', duration: '50分' },
+  { id: 'period-3', label: '3時限', type: '授業', time: '13:15〜14:55', duration: '100分' },
+  { id: 'break-3', label: '休み時間', type: '休み時間', time: '14:55〜15:10', duration: '15分' },
+  { id: 'period-4', label: '4時限', type: '授業', time: '15:10〜16:50', duration: '100分' },
+  { id: 'break-4', label: '休み時間', type: '休み時間', time: '16:50〜17:05', duration: '15分' },
+  { id: 'period-5', label: '5時限', type: '授業', time: '17:05〜18:45', duration: '100分' },
 ];
 
 function CameraRig({ targetPosition }) {
@@ -171,7 +171,7 @@ function TimetableView() {
       <header className="timetable-header">
         <p className="section-kicker">Timetable</p>
         <h1>時間割</h1>
-        <p>2020年度以降の現行時間です。授業と休み時間を時刻で確認できます。</p>
+        <p>2020年度以降の時間です。100分授業と休み時間を時刻で確認できます。</p>
       </header>
 
       <div className="timetable-list">
