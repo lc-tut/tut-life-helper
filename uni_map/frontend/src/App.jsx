@@ -27,11 +27,8 @@ const cafeteriaVenues = [
       { name: 'カツカレー', price: 680, category: 'カレー' },
       { name: 'ハンバーグプレート', price: 700, category: 'プレート' },
       { name: 'ライス単品', price: 160, category: 'サイド' },
-<<<<<<< HEAD
       { name: '味噌汁', price: 90, category: 'サイド' },
       { name: '小鉢', price: 120, category: 'サイド' },
-=======
->>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
     ],
   },
   {
@@ -46,11 +43,8 @@ const cafeteriaVenues = [
       { name: 'オムライス', price: 640, category: 'ごはん' },
       { name: 'サラダボウル', price: 460, category: 'サラダ' },
       { name: 'スープセット', price: 280, category: 'サイド' },
-<<<<<<< HEAD
       { name: 'フライドポテト', price: 250, category: '軽食' },
       { name: 'ドリンクセット', price: 180, category: 'ドリンク' },
-=======
->>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
     ],
   },
   {
@@ -65,11 +59,8 @@ const cafeteriaVenues = [
       { name: 'カツ丼', price: 620, category: '丼' },
       { name: '親子丼', price: 560, category: '丼' },
       { name: 'ミニサラダ', price: 180, category: 'サイド' },
-<<<<<<< HEAD
       { name: '半ライス', price: 120, category: 'サイド' },
       { name: '温泉卵', price: 100, category: 'トッピング' },
-=======
->>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
     ],
   },
 ];
@@ -77,6 +68,18 @@ const cafeteriaVenues = [
 function formatPrice(price) {
   return `¥${price.toLocaleString('ja-JP')}`;
 }
+
+const timetableRows = [
+  { id: 'period-1', label: '1時限', type: '授業', time: '09:00〜10:30', duration: '90分' },
+  { id: 'break-1', label: '休み時間', type: '休み時間', time: '10:30〜10:45', duration: '15分' },
+  { id: 'period-2', label: '2時限', type: '授業', time: '10:45〜12:15', duration: '90分' },
+  { id: 'lunch', label: '昼休み', type: '休み時間', time: '12:15〜13:15', duration: '60分' },
+  { id: 'period-3', label: '3時限', type: '授業', time: '13:15〜14:45', duration: '90分' },
+  { id: 'break-3', label: '休み時間', type: '休み時間', time: '14:45〜15:00', duration: '15分' },
+  { id: 'period-4', label: '4時限', type: '授業', time: '15:00〜16:30', duration: '90分' },
+  { id: 'break-4', label: '休み時間', type: '休み時間', time: '16:30〜16:45', duration: '15分' },
+  { id: 'period-5', label: '5時限', type: '授業', time: '16:45〜18:15', duration: '90分' },
+];
 
 function CameraRig({ targetPosition }) {
   const controlsRef = useRef();
@@ -128,6 +131,8 @@ function App() {
       <div className="app-content">
         {activeTab === 'map' ? (
           <CampusMap />
+        ) : activeTab === 'timetable' ? (
+          <TimetableView />
         ) : activeTab === 'cafeteria' ? (
           <CafeteriaMenu />
         ) : (
@@ -160,9 +165,36 @@ function App() {
   );
 }
 
+function TimetableView() {
+  return (
+    <section className="timetable-view" aria-label="現行時間割">
+      <header className="timetable-header">
+        <p className="section-kicker">Timetable</p>
+        <h1>時間割</h1>
+        <p>2020年度以降の現行時間です。授業と休み時間を時刻で確認できます。</p>
+      </header>
+
+      <div className="timetable-list">
+        {timetableRows.map(row => (
+          <article
+            className={`timetable-row${row.type === '休み時間' ? ' is-break' : ''}`}
+            key={row.id}
+          >
+            <div>
+              <span className="timetable-kind">{row.type}</span>
+              <h2>{row.label}</h2>
+            </div>
+            <p className="timetable-time">{row.time}</p>
+            <span className="timetable-duration">{row.duration}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function CafeteriaMenu() {
   const [activeVenueId, setActiveVenueId] = useState(cafeteriaVenues[0].id);
-<<<<<<< HEAD
   const cafeteriaViewRef = useRef(null);
   const swipeStart = useRef(null);
   const activeVenueIndex = cafeteriaVenues.findIndex(venue => venue.id === activeVenueId);
@@ -218,12 +250,6 @@ function CafeteriaMenu() {
         swipeStart.current = null;
       }}
     >
-=======
-  const activeVenue = cafeteriaVenues.find(venue => venue.id === activeVenueId) ?? cafeteriaVenues[0];
-
-  return (
-    <section className="cafeteria-view" aria-label="学食メニュー">
->>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
       <header className="cafeteria-header">
         <div>
           <p className="section-kicker">Cafeteria</p>
@@ -246,11 +272,7 @@ function CafeteriaMenu() {
               role="tab"
               aria-selected={isActive}
               className={`venue-button${isActive ? ' is-active' : ''}`}
-<<<<<<< HEAD
               onClick={() => showVenue(cafeteriaVenues.findIndex(item => item.id === venue.id))}
-=======
-              onClick={() => setActiveVenueId(venue.id)}
->>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
             >
               {venue.name}
             </button>
@@ -263,11 +285,7 @@ function CafeteriaMenu() {
         <p>{activeVenue.detail}</p>
       </div>
 
-<<<<<<< HEAD
       <div className="menu-grid" aria-live="polite">
-=======
-      <div className="menu-grid">
->>>>>>> 67be3a8378657b58b0cc0664543f9e075e2d24fd
         {activeVenue.items.map(item => (
           <article className="menu-card" key={`${activeVenue.id}-${item.name}`}>
             <span className="menu-category">{item.category}</span>
