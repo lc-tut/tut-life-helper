@@ -1,0 +1,49 @@
+[
+  {
+    "id": "bldg1",
+    "name": "1号館",
+    "position": {"x": -10, "z": -10},
+    "floors": [
+      {
+        "level": 1, "name": "1F", "details": "学生ホール、カフェテリア",
+        "rooms": [
+          {"id": "t_men_1", "type": "toilet_men", "label": "男子トイレ", "color": "#1e90ff", "position": {"x": 1.2, "z": -1.2}, "size": {"x": 0.8, "z": 0.8}},
+          {"id": "t_women_1", "type": "toilet_women", "label": "女子トイレ", "color": "#ff69b4", "position": {"x": 1.2, "z": -0.2}, "size": {"x": 0.8, "z": 0.8}}
+        ]
+      },
+      {"level": 2, "name": "2F", "details": "講義室 201〜205"},
+      {"level": 3, "name": "3F", "details": "教員研究室"}
+    ]
+  },
+  {
+    "id": "bldg2",
+    "name": "図書館",
+    "position": {"x": 5, "z": 0},
+    "floors": [
+      {
+        "level": 1, "name": "1F", "details": "開架図書室、受付",
+        "rooms": [
+          {"id": "t_men_2", "type": "toilet_men", "label": "男子トイレ", "color": "#1e90ff", "position": {"x": -1.2, "z": 1.2}, "size": {"x": 0.6, "z": 0.8}},
+          {"id": "t_women_2", "type": "toilet_women", "label": "女子トイレ", "color": "#ff69b4", "position": {"x": -0.4, "z": 1.2}, "size": {"x": 0.6, "z": 0.8}}
+        ]
+      },
+      {"level": 2, "name": "2F", "details": "閲覧室、グループ学習室"},
+      {"level": 3, "name": "3F", "details": "専門図書、アーカイブ"}
+    ]
+  },
+  {
+    "id": "bldg3",
+    "name": "体育館",
+    "position": {"x": -5, "z": 15},
+    "floors": [
+      {
+        "level": 1, "name": "1F", "details": "メインアリーナ",
+        "rooms": [
+          {"id": "t_men_3", "type": "toilet_men", "label": "男子トイレ", "color": "#1e90ff", "position": {"x": 1.5, "z": 1.5}, "size": {"x": 0.8, "z": 0.6}},
+          {"id": "t_women_3", "type": "toilet_women", "label": "女子トイレ", "color": "#ff69b4", "position": {"x": 1.5, "z": 0.7}, "size": {"x": 0.8, "z": 0.6}}
+        ]
+      },
+      {"level": 2, "name": "2F", "details": "トレーニングルーム、観覧席"}
+    ]
+  }
+]
