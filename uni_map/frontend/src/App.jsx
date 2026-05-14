@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, OrthographicCamera, ContactShadows, Environment } from '@react-three/drei';
-import { Bus, CalendarDays, Map as MapIcon, UsersRound, Utensils } from 'lucide-react';
+import { Building2, Bus, CalendarDays, Map as MapIcon, MapPin, Search, UsersRound, Utensils, X } from 'lucide-react';
 import * as THREE from 'three';
 import Building from './components/Building';
 import fallbackBuildings from '../../backend/data.json';
@@ -18,8 +18,7 @@ const cafeteriaVenues = [
   {
     id: 'terrace',
     name: '802A TERRACE',
-    detail: '定食とカレーを中心に、昼休みに選びやすいメニューをまとめています。',
-    highlight: '定食・カレー',
+    detail: '東京工科大学の「802A TERRACE（ハチマルニエー・テラス）」は、八王子キャンパスの厚生棟3階にある学生食堂・カフェです。カフェめしやスイーツ、日替りランチなどが楽しめるおしゃれな空間として人気があり、休憩や憩いの場として利用されています。',
     items: [
       { name: '日替わりランチ', price: 650, category: '定食' },
       { name: '唐揚げ定食', price: 620, category: '定食' },
@@ -34,8 +33,7 @@ const cafeteriaVenues = [
   {
     id: 'rose',
     name: 'ROSE kitchen',
-    detail: '軽めの食事や洋食系のメニューを探すときに見やすい構成です。',
-    highlight: '洋食・軽食',
+    detail: '東京工科大学の「ROSE kitchen（ローズキッチン）」は、八王子キャンパスの厚生棟4階にある、590席の広大な学生食堂です。一般の利用も可能で、安くてボリュームのある定食、カレー、パスタ、ガッツリ系のランチメニューを提供しており、学生に人気のスポットです。',
     items: [
       { name: 'ローストチキンプレート', price: 720, category: 'プレート' },
       { name: 'ミートソースパスタ', price: 580, category: 'パスタ' },
@@ -50,8 +48,7 @@ const cafeteriaVenues = [
   {
     id: 'foods-fuu',
     name: 'FOODS FUU',
-    detail: '丼もの、麺類、すぐ食べたいメニューを中心に掲載しています。',
-    highlight: '丼・麺',
+    detail: '東京工科大学（八王子キャンパス）の「FOODS FUU（フーズ・フー）」は、1階・2階合わせて約360席を持つ、学内最大級の食堂・レストランフロアです。吉野家やラーメン店、パン屋、コンビニ、ネットカフェが集まる、学生の憩いの場・生活拠点となっています。',
     items: [
       { name: 'かけうどん', price: 360, category: 'うどん' },
       { name: 'きつねうどん', price: 430, category: 'うどん' },
@@ -67,6 +64,34 @@ const cafeteriaVenues = [
 
 function formatPrice(price) {
   return `¥${price.toLocaleString('ja-JP')}`;
+}
+
+function normalizeSearchText(value) {
+  return value
+    .toString()
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, char => String.fromCharCode(char.charCodeAt(0) - 0xfee0))
+    .toLowerCase()
+    .replace(/\s+/g, '');
+}
+
+function formatFloorTitle(building, floor) {
+  return `${building.name} ${floor.name}`;
+}
+
+function createFloorSearchText(building, floor) {
+  const roomText = (floor.rooms ?? [])
+    .map(room => `${room.label} ${room.type}`)
+    .join(' ');
+
+  return normalizeSearchText([
+    building.name,
+    `${building.name}棟`,
+    floor.name,
+    `${floor.level}F`,
+    `${floor.level}階`,
+    floor.details,
+    roomText,
+  ].join(' '));
 }
 
 const timetableRows = [
@@ -281,7 +306,6 @@ function CafeteriaMenu() {
       </div>
 
       <div className="venue-summary">
-        <span>{activeVenue.highlight}</span>
         <p>{activeVenue.detail}</p>
       </div>
 
@@ -305,6 +329,8 @@ function CampusMap() {
   const [buildings, setBuildings] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [cameraTarget, setCameraTarget] = useState(new THREE.Vector3(0, 0, 0));
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   useEffect(() => {
     // バックエンドからデータを取得
@@ -317,8 +343,32 @@ function CampusMap() {
       });
   }, []);
 
-  const handleFloorClick = (building, floor) => {
+  const floorOptions = useMemo(() => buildings.flatMap(building => (
+    building.floors.map(floor => ({
+      id: `${building.id}-${floor.level}`,
+      building,
+      floor,
+      title: formatFloorTitle(building, floor),
+      searchText: createFloorSearchText(building, floor),
+    }))
+  )), [buildings]);
+
+  const filteredFloorOptions = useMemo(() => {
+    const normalizedQuery = normalizeSearchText(searchQuery);
+
+    if (!normalizedQuery) {
+      return floorOptions.slice(0, 6);
+    }
+
+    return floorOptions
+      .filter(option => option.searchText.includes(normalizedQuery))
+      .slice(0, 8);
+  }, [floorOptions, searchQuery]);
+
+  const selectFloor = (building, floor) => {
     setSelectedFloor({ building, floor });
+    setSearchQuery(formatFloorTitle(building, floor));
+    setIsSearchFocused(false);
     
     // Blender風: ターゲットを選択された建物の階層の中心に移動
     const floorHeight = 1.5;
@@ -326,13 +376,91 @@ function CampusMap() {
     setCameraTarget(new THREE.Vector3(building.position.x, yPos, building.position.z));
   };
 
+  const handleFloorClick = (building, floor) => {
+    selectFloor(building, floor);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+
+    if (filteredFloorOptions.length === 0) {
+      return;
+    }
+
+    const { building, floor } = filteredFloorOptions[0];
+    selectFloor(building, floor);
+  };
+
   const resetSelection = () => {
     setSelectedFloor(null);
+    setSearchQuery('');
+    setIsSearchFocused(false);
     // 注視点はそのまま維持し、ユーザーが自由に移動（パン）できるようにする
   };
 
+  const selectedRooms = selectedFloor?.floor.rooms ?? [];
+  const selectedBuildingFloors = selectedFloor?.building.floors ?? [];
+  const shouldShowSuggestions = isSearchFocused && (searchQuery || filteredFloorOptions.length > 0);
+
   return (
     <div className="map-view">
+      <div className="map-search-panel">
+        <form className="map-search-form" role="search" onSubmit={handleSearchSubmit}>
+          <MapPin className="map-search-logo" aria-hidden="true" />
+          <input
+            type="search"
+            value={searchQuery}
+            placeholder="建物・階を検索"
+            aria-label="建物や階を検索"
+            autoComplete="off"
+            onChange={(event) => {
+              setSearchQuery(event.target.value);
+              setIsSearchFocused(true);
+            }}
+            onFocus={() => setIsSearchFocused(true)}
+            onBlur={() => {
+              setTimeout(() => setIsSearchFocused(false), 120);
+            }}
+          />
+          {searchQuery && (
+            <button className="map-search-clear" type="button" aria-label="検索をクリア" onClick={resetSelection}>
+              <X size={21} aria-hidden="true" />
+            </button>
+          )}
+          <button className="map-search-submit" type="submit" aria-label="検索">
+            <Search size={23} aria-hidden="true" />
+          </button>
+        </form>
+
+        {shouldShowSuggestions && (
+          <div className="map-search-suggestions" role="listbox" aria-label="検索候補">
+            {filteredFloorOptions.length > 0 ? (
+              filteredFloorOptions.map(option => (
+                <button
+                  key={option.id}
+                  type="button"
+                  role="option"
+                  aria-selected={selectedFloor?.building.id === option.building.id && selectedFloor.floor.level === option.floor.level}
+                  className="map-search-option"
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => selectFloor(option.building, option.floor)}
+                >
+                  <span className="map-search-option-icon">
+                    <Building2 size={18} aria-hidden="true" />
+                  </span>
+                  <span>
+                    <strong>{option.title}</strong>
+                    <small>{option.floor.details}</small>
+                  </span>
+                </button>
+              ))
+            ) : (
+              <p className="map-search-empty">一致する場所がありません</p>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* onPointerMissed で背景クリック時に選択解除 */}
       <Canvas shadows onPointerMissed={resetSelection}>
         <OrthographicCamera makeDefault position={[50, 50, 50]} zoom={25} near={-100} far={1000} />
@@ -369,25 +497,69 @@ function CampusMap() {
         ))}
       </Canvas>
 
-      {/* UI オーバーレイ (詳細情報) */}
       {selectedFloor && (
-        <div className="floor-panel">
-          <h2>
-            {selectedFloor.building.name} - {selectedFloor.floor.name}
-          </h2>
-          <p>
-            {selectedFloor.floor.details}
-          </p>
-          <button type="button" onClick={resetSelection}>
-            閉じる
-          </button>
-        </div>
+        <section className="floor-panel" aria-live="polite" aria-label={`${selectedFloor.building.name} ${selectedFloor.floor.name}の詳細`}>
+          <div className="floor-panel-handle" aria-hidden="true" />
+          <div className="floor-panel-top">
+            <span className="floor-panel-kicker">Campus detail</span>
+            <button className="floor-panel-close" type="button" aria-label="詳細を閉じる" onClick={resetSelection}>
+              <X size={22} aria-hidden="true" />
+            </button>
+          </div>
+          <h2>{formatFloorTitle(selectedFloor.building, selectedFloor.floor)}</h2>
+          <p>{selectedFloor.floor.details}</p>
+
+          <div className="floor-facts">
+            <div>
+              <span>建物</span>
+              <strong>{selectedFloor.building.name}</strong>
+            </div>
+            <div>
+              <span>階</span>
+              <strong>{selectedFloor.floor.name}</strong>
+            </div>
+            <div>
+              <span>登録設備</span>
+              <strong>{selectedRooms.length || 'なし'}</strong>
+            </div>
+          </div>
+
+          <div className="floor-detail-section">
+            <h3>設備</h3>
+            {selectedRooms.length > 0 ? (
+              <div className="room-tags">
+                {selectedRooms.map(room => (
+                  <span key={room.id}>{room.label}</span>
+                ))}
+              </div>
+            ) : (
+              <p>この階の設備情報はまだ登録されていません。</p>
+            )}
+          </div>
+
+          {selectedBuildingFloors.length > 1 && (
+            <div className="floor-detail-section">
+              <h3>同じ建物の階</h3>
+              <div className="floor-chip-list">
+                {selectedBuildingFloors.map(floor => {
+                  const isActive = floor.level === selectedFloor.floor.level;
+
+                  return (
+                    <button
+                      key={floor.level}
+                      type="button"
+                      className={`floor-chip${isActive ? ' is-active' : ''}`}
+                      onClick={() => selectFloor(selectedFloor.building, floor)}
+                    >
+                      {floor.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </section>
       )}
-      
-      {/* タイトルUI */}
-      <div className="map-title">
-        <h1>マップ</h1>
-      </div>
     </div>
   );
 }

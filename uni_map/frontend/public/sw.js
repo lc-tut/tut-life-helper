@@ -1,9 +1,9 @@
-const CACHE_NAME = 'tut-maps-v3';
+const CACHE_NAME = 'tut-maps-v5';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/favicon.svg',
+  '/favicon.png',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/maskable-icon-512.png',
