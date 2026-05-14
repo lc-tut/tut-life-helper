@@ -4,6 +4,7 @@ import { OrbitControls, OrthographicCamera, ContactShadows, Environment } from '
 import { Bus, CalendarDays, Map as MapIcon, UsersRound, Utensils } from 'lucide-react';
 import * as THREE from 'three';
 import Building from './components/Building';
+import fallbackBuildings from '../../backend/data.json';
 
 const tabs = [
   { id: 'map', label: 'マップ', Icon: MapIcon },
@@ -105,6 +106,7 @@ function CampusMap() {
       .then(data => setBuildings(data))
       .catch(err => {
         console.error("Failed to fetch buildings:", err);
+        setBuildings(fallbackBuildings);
       });
   }, []);
 
