@@ -1,0 +1,47 @@
+export const cafeteriaVenues = [
+  {
+    id: 'terrace',
+    name: '802A TERRACE',
+    detail: '東京工科大学の「802A TERRACE（ハチマルニエー・テラス）」は、八王子キャンパスの厚生棟3階にある学生食堂・カフェです。カフェめしやスイーツ、日替りランチなどが楽しめるおしゃれな空間として人気があり、休憩や憩いの場として利用されています。',
+    items: [
+      { name: '日替わりランチ', price: 650, category: '定食' },
+      { name: '唐揚げ定食', price: 620, category: '定食' },
+      { name: 'チキンカレー', price: 520, category: 'カレー' },
+      { name: 'カツカレー', price: 680, category: 'カレー' },
+      { name: 'ハンバーグプレート', price: 700, category: 'プレート' },
+      { name: 'ライス単品', price: 160, category: 'サイド' },
+      { name: '味噌汁', price: 90, category: 'サイド' },
+      { name: '小鉢', price: 120, category: 'サイド' },
+    ],
+  },
+  {
+    id: 'rose',
+    name: 'ROSE kitchen',
+    detail: '東京工科大学の「ROSE kitchen（ローズキッチン）」は、八王子キャンパスの厚生棟4階にある、590席の広大な学生食堂です。一般の利用も可能で、安くてボリュームのある定食、カレー、パスタ、ガッツリ系のランチメニューを提供しており、学生に人気のスポットです。',
+    items: [
+      { name: 'ローストチキンプレート', price: 720, category: 'プレート' },
+      { name: 'ミートソースパスタ', price: 580, category: 'パスタ' },
+      { name: 'カルボナーラ', price: 620, category: 'パスタ' },
+      { name: 'オムライス', price: 640, category: 'ごはん' },
+      { name: 'サラダボウル', price: 460, category: 'サラダ' },
+      { name: 'スープセット', price: 280, category: 'サイド' },
+      { name: 'フライドポテト', price: 250, category: '軽食' },
+      { name: 'ドリンクセット', price: 180, category: 'ドリンク' },
+    ],
+  },
+  {
+    id: 'foods-fuu',
+    name: 'FOODS FUU',
+    detail: '東京工科大学（八王子キャンパス）の「FOODS FUU（フーズ・フー）」は、1階・2階合わせて約360席を持つ、学内最大級の食堂・レストランフロアです。吉野家やラーメン店、パン屋、コンビニ、ネットカフェが集まる、学生の憩いの場・生活拠点となっています。',
+    items: [
+      { name: 'かけうどん', price: 360, category: 'うどん' },
+      { name: 'きつねうどん', price: 430, category: 'うどん' },
+      { name: '醤油ラーメン', price: 520, category: 'ラーメン' },
+      { name: 'カツ丼', price: 620, category: '丼' },
+      { name: '親子丼', price: 560, category: '丼' },
+      { name: 'ミニサラダ', price: 180, category: 'サイド' },
+      { name: '半ライス', price: 120, category: 'サイド' },
+      { name: '温泉卵', price: 100, category: 'トッピング' },
+    ],
+  },
+];
