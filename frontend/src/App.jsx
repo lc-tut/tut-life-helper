@@ -3,8 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, OrthographicCamera, ContactShadows, Environment } from '@react-three/drei';
 import { Building2, Bus, CalendarDays, Map as MapIcon, MapPin, Search, UsersRound, Utensils, X } from 'lucide-react';
 import * as THREE from 'three';
-import Building from './components/Building';
-import fallbackBuildings from '../../backend/data.json';
+import Building from './features/map/components/Building';
+import { fetchBuildings } from './features/map/api';
+import fallbackBuildings from '../../backend/app/data.json';
 
 const tabs = [
   { id: 'map', label: 'マップ', Icon: MapIcon },
@@ -388,12 +389,9 @@ function CampusMap() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   useEffect(() => {
-    // バックエンドからデータを取得
-    fetch('http://localhost:8000/api/buildings')
-      .then(res => res.json())
+    fetchBuildings()
       .then(data => setBuildings(data))
       .catch(err => {
-        console.error("Failed to fetch buildings:", err);
         setBuildings(fallbackBuildings);
       });
   }, []);
