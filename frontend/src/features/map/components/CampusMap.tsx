@@ -3,16 +3,16 @@ import { Canvas } from '@react-three/fiber';
 import { OrthographicCamera, ContactShadows, Environment } from '@react-three/drei';
 import { Building2, MapPin, Search, X } from 'lucide-react';
 import * as THREE from 'three';
-import Building from './Building';
+import Building, { BuildingData, FloorData, Room } from './Building';
 import { fetchBuildings } from '../api';
-import fallbackBuildings from '../../../../../backend/app/data.json';
+import fallbackBuildings from '../data/data.json'
 import { CameraRig } from './CameraRig';
 import { formatFloorTitle } from '../utils/format';
 import { createFloorSearchText, normalizeSearchText } from '../utils/search';
 
 export function CampusMap() {
-  const [buildings, setBuildings] = useState<any[]>([]);
-  const [selectedFloor, setSelectedFloor] = useState<any>(null);
+  const [buildings, setBuildings] = useState<BuildingData[]>([]);
+  const [selectedFloor, setSelectedFloor] = useState<{ building: BuildingData; floor: FloorData } | null>(null);
   const [cameraTarget, setCameraTarget] = useState(new THREE.Vector3(0, 0, 0));
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -20,13 +20,13 @@ export function CampusMap() {
   useEffect(() => {
     fetchBuildings()
       .then(data => setBuildings(data))
-      .catch(err => {
-        setBuildings(fallbackBuildings as any[]);
+      .catch(() => {
+        setBuildings(fallbackBuildings as BuildingData[]);
       });
   }, []);
 
   const floorOptions = useMemo(() => buildings.flatMap(building => (
-    building.floors.map((floor: any) => ({
+    building.floors.map((floor: FloorData) => ({
       id: `${building.id}-${floor.level}`,
       building,
       floor,
@@ -47,7 +47,7 @@ export function CampusMap() {
       .slice(0, 8);
   }, [floorOptions, searchQuery]);
 
-  const selectFloor = (building: any, floor: any) => {
+  const selectFloor = (building: BuildingData, floor: FloorData) => {
     setSelectedFloor({ building, floor });
     setSearchQuery(formatFloorTitle(building, floor));
     setIsSearchFocused(false);
@@ -58,7 +58,7 @@ export function CampusMap() {
     setCameraTarget(new THREE.Vector3(building.position.x, yPos, building.position.z));
   };
 
-  const handleFloorClick = (building: any, floor: any) => {
+  const handleFloorClick = (building: BuildingData, floor: FloorData) => {
     selectFloor(building, floor);
   };
 
@@ -160,7 +160,7 @@ export function CampusMap() {
           <orthographicCamera attach="shadow-camera" args={[-30, 30, 30, -30]} />
         </directionalLight>
 
-        <Environment preset="city" opacity={0.3} />
+        <Environment preset="city" />
 
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
           <planeGeometry args={[100, 100]} />
@@ -210,7 +210,7 @@ export function CampusMap() {
             <h3>設備</h3>
             {selectedRooms.length > 0 ? (
               <div className="room-tags">
-                {selectedRooms.map((room: any) => (
+                {selectedRooms.map((room: Room) => (
                   <span key={room.id}>{room.label}</span>
                 ))}
               </div>
@@ -223,7 +223,7 @@ export function CampusMap() {
             <div className="floor-detail-section">
               <h3>同じ建物の階</h3>
               <div className="floor-chip-list">
-                {selectedBuildingFloors.map((floor: any) => {
+                {selectedBuildingFloors.map((floor: FloorData) => {
                   const isActive = floor.level === selectedFloor.floor.level;
 
                   return (

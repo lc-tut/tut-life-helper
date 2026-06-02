@@ -1,8 +1,42 @@
 import { useState, useMemo } from 'react';
-
 import * as THREE from 'three';
 
-export default function Building({ data, selectedFloor, onFloorClick }) {
+export interface Room {
+  id: string;
+  label?: string;
+  name?: string;
+  type?: string;
+  position: { x: number; z: number };
+  size: { x: number; z: number };
+  color: string;
+}
+
+export interface FloorData {
+  level: number;
+  name: string;
+  details?: string;
+  rooms?: Room[];
+}
+
+export interface BuildingData {
+  id: string;
+  name: string;
+  position: { x: number; z: number };
+  floors: FloorData[];
+}
+
+export interface SelectedFloor {
+  building: BuildingData;
+  floor: FloorData;
+}
+
+interface BuildingProps {
+  data: BuildingData;
+  selectedFloor: SelectedFloor | null;
+  onFloorClick: (building: BuildingData, floor: FloorData) => void;
+}
+
+export default function Building({ data, selectedFloor, onFloorClick }: BuildingProps) {
   const { position, floors } = data;
   const floorHeight = 1.5;
   const width = 4;
@@ -16,9 +50,9 @@ export default function Building({ data, selectedFloor, onFloorClick }) {
         const yPos = floorHeight / 2 + index * floorHeight;
         
         // 選択された階より上の階は非表示にする
-        const isHidden = isBuildingSelected && floor.level > selectedFloor.floor.level;
+        const isHidden = isBuildingSelected && floor.level > (selectedFloor?.floor.level ?? 0);
         // 現在選択中の階かどうか
-        const isSelected = isBuildingSelected && floor.level === selectedFloor.floor.level;
+        const isSelected = isBuildingSelected && floor.level === selectedFloor?.floor.level;
 
         return (
           <group key={floor.level} position={[0, yPos, 0]} visible={!isHidden}>
@@ -43,7 +77,13 @@ export default function Building({ data, selectedFloor, onFloorClick }) {
   );
 }
 
-function Floor({ size, isSelected, onClick }) {
+interface FloorProps {
+  size: [number, number, number];
+  isSelected: boolean;
+  onClick: () => void;
+}
+
+function Floor({ size, isSelected, onClick }: FloorProps) {
   const [hovered, setHover] = useState(false);
 
   const matColor = isSelected ? '#dfe6ff' : hovered ? '#eef2ff' : '#ffffff';
@@ -56,7 +96,6 @@ function Floor({ size, isSelected, onClick }) {
     metalness: 0.1,
     side: isSelected ? THREE.BackSide : THREE.FrontSide
   }), [matColor, isSelected]);
-
 
   return (
     <mesh
@@ -83,8 +122,12 @@ function Floor({ size, isSelected, onClick }) {
   );
 }
 
+interface RoomBoxProps {
+  room: Room;
+}
+
 // 間取り・トイレ等の小さな3Dボックス
-function RoomBox({ room }) {
+function RoomBox({ room }: RoomBoxProps) {
   const roomHeight = 0.5; // 床からの高さ
   return (
     <mesh position={[room.position.x, roomHeight / 2, room.position.z]} castShadow receiveShadow>

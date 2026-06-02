@@ -4,7 +4,8 @@ import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 export function CameraRig({ targetPosition }: { targetPosition: THREE.Vector3 }) {
-  const controlsRef = useRef<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const controlsRef = useRef<any>(null);
   const isTransitioning = useRef(false);
 
   useEffect(() => {

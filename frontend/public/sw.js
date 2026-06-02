@@ -1,3 +1,10 @@
+// @ts-check
+/// <reference lib="webworker" />
+
+/** @type {ServiceWorkerGlobalScope} */
+// @ts-ignore
+const sw = self;
+
 const CACHE_NAME = 'tut-maps-v6';
 const APP_SHELL = [
   '/',
@@ -10,15 +17,15 @@ const APP_SHELL = [
   '/icons/apple-touch-icon-20260514.png',
 ];
 
-self.addEventListener('install', event => {
+sw.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
+      .then(() => sw.skipWaiting())
   );
 });
 
-self.addEventListener('activate', event => {
+sw.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
       .then(keys => Promise.all(
@@ -26,14 +33,14 @@ self.addEventListener('activate', event => {
           .filter(key => key !== CACHE_NAME)
           .map(key => caches.delete(key))
       ))
-      .then(() => self.clients.claim())
+      .then(() => sw.clients.claim())
   );
 });
 
-self.addEventListener('fetch', event => {
+sw.addEventListener('fetch', event => {
   const { request } = event;
 
-  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) {
+  if (request.method !== 'GET' || new URL(request.url).origin !== sw.location.origin) {
     return;
   }
 

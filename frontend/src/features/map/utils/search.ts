@@ -1,4 +1,7 @@
-export function normalizeSearchText(value: any): string {
+import { BuildingData, FloorData, Room } from '../components/Building';
+
+export function normalizeSearchText(value: unknown): string {
+  if (value == null) return '';
   return value
     .toString()
     .replace(/[Ａ-Ｚａ-ｚ０-９]/g, (char: string) => String.fromCharCode(char.charCodeAt(0) - 0xfee0))
@@ -6,9 +9,9 @@ export function normalizeSearchText(value: any): string {
     .replace(/\s+/g, '');
 }
 
-export function createFloorSearchText(building: any, floor: any): string {
+export function createFloorSearchText(building: BuildingData, floor: FloorData): string {
   const roomText = (floor.rooms ?? [])
-    .map((room: any) => `${room.label} ${room.type}`)
+    .map((room: Room) => `${room.label ?? ''} ${room.type ?? ''}`)
     .join(' ');
 
   return normalizeSearchText([

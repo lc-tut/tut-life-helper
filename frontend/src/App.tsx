@@ -7,7 +7,15 @@ import { IntroScreen } from './features/intro/components/IntroScreen';
 import { BusView } from './features/bus/components/BusView';
 import { isRunningAsPwa } from './features/core/utils/pwa';
 
-const tabs = [
+import { LucideIcon } from 'lucide-react';
+
+interface Tab {
+  id: string;
+  label: string;
+  Icon: LucideIcon;
+}
+
+const tabs: Tab[] = [
   { id: 'map', label: 'マップ', Icon: MapIcon },
   { id: 'timetable', label: '時間割', Icon: CalendarDays },
   { id: 'cafeteria', label: '学食', Icon: Utensils },
@@ -16,7 +24,7 @@ const tabs = [
 ];
 
 function App() {
-  const [activeTab, setActiveTab] = useState('map');
+  const [activeTab, setActiveTab] = useState<string>('map');
   const [showIntro, setShowIntro] = useState(() => !isRunningAsPwa());
 
   const activeTabData = tabs.find(tab => tab.id === activeTab) ?? tabs[0];
