@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import cafeteriaVenues from '../data/data.json';
+import { cafeteriaVenues } from '../data/venues';
 import { formatPrice } from '../utils/format';
 
 export function CafeteriaMenu() {

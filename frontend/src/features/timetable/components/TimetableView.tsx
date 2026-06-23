@@ -1,4 +1,4 @@
-import timetableRows from '../data/data.json';
+import { timetableRows } from '../data/timetable';
 
 export function TimetableView() {
   return (

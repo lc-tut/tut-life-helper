@@ -1,4 +1,4 @@
-import { BuildingData, FloorData, Room } from '../components/Building';
+import { BuildingData, FloorData, Room } from '../types';
 
 export function normalizeSearchText(value: unknown): string {
   if (value == null) return '';

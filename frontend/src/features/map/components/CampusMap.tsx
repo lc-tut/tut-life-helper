@@ -3,9 +3,10 @@ import { Canvas } from '@react-three/fiber';
 import { OrthographicCamera, ContactShadows, Environment } from '@react-three/drei';
 import { Building2, MapPin, Search, X } from 'lucide-react';
 import * as THREE from 'three';
-import Building, { BuildingData, FloorData, Room } from './Building';
+import type { BuildingData, FloorData, Room } from '../types';
+import { CampusModels } from './CampusModels';
 import { fetchBuildings } from '../api';
-import fallbackBuildings from '../data/data.json'
+import fallbackBuildings from '../../../../../backend/app/data.json';
 import { CameraRig } from './CameraRig';
 import { formatFloorTitle } from '../utils/format';
 import { createFloorSearchText, normalizeSearchText } from '../utils/search';
@@ -145,7 +146,7 @@ export function CampusMap() {
 
       {/* onPointerMissed で背景クリック時に選択解除 */}
       <Canvas shadows onPointerMissed={resetSelection}>
-        <OrthographicCamera makeDefault position={[50, 50, 50]} zoom={25} near={-100} far={1000} />
+        <OrthographicCamera makeDefault position={[30, 30, 30]} zoom={20} near={-10000} far={10000} />
         
         {/* スムーズなカメラ移動コントローラー */}
         <CameraRig targetPosition={cameraTarget} />
@@ -169,14 +170,7 @@ export function CampusMap() {
         
         <ContactShadows position={[0, -0.09, 0]} opacity={0.4} scale={50} blur={2} far={10} />
 
-        {buildings.map(bldg => (
-          <Building 
-            key={bldg.id} 
-            data={bldg} 
-            selectedFloor={selectedFloor}
-            onFloorClick={handleFloorClick} 
-          />
-        ))}
+        <CampusModels />
       </Canvas>
 
       {selectedFloor && (

@@ -1,6 +1,3 @@
-# このreadmeは機能しない可能性があるのであまり信用しないように。
-
-
 # 3D Campus Map - Frontend
 
 このディレクトリは、React Three Fiberを使用した3Dキャンパスマップのフロントエンドです。
