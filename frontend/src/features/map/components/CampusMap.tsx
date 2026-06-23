@@ -5,26 +5,17 @@ import { Building2, MapPin, Search, X } from 'lucide-react';
 import * as THREE from 'three';
 import type { BuildingData, FloorData, Room } from '../types';
 import { CampusModels } from './CampusModels';
-import { fetchBuildings } from '../api';
-import fallbackBuildings from '../../../../../backend/app/data.json';
+import mapData from '../data.json';
 import { CameraRig } from './CameraRig';
 import { formatFloorTitle } from '../utils/format';
 import { createFloorSearchText, normalizeSearchText } from '../utils/search';
 
 export function CampusMap() {
-  const [buildings, setBuildings] = useState<BuildingData[]>([]);
+  const [buildings, setBuildings] = useState<BuildingData[]>(mapData as BuildingData[]);
   const [selectedFloor, setSelectedFloor] = useState<{ building: BuildingData; floor: FloorData } | null>(null);
   const [cameraTarget, setCameraTarget] = useState(new THREE.Vector3(0, 0, 0));
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-
-  useEffect(() => {
-    fetchBuildings()
-      .then(data => setBuildings(data))
-      .catch(() => {
-        setBuildings(fallbackBuildings as BuildingData[]);
-      });
-  }, []);
 
   const floorOptions = useMemo(() => buildings.flatMap(building => (
     building.floors.map((floor: FloorData) => ({
